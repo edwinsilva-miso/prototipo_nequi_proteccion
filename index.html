@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prototipo Nequi Protección</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .screen { 
+            display: none; 
+            overflow-y: auto; /* Permite el scroll vertical si el contenido es muy largo */
+            scrollbar-width: thin; /* Para Firefox */
+            scrollbar-color: #d1d5db transparent; /* Para Firefox */
+        }
+        /* Estilos para un scroll discreto en navegadores Webkit (Chrome, Safari) */
+        .screen::-webkit-scrollbar {
+            width: 6px;
+        }
+        .screen::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .screen::-webkit-scrollbar-thumb {
+            background-color: #d1d5db;
+            border-radius: 20px;
+            border: 3px solid transparent;
+        }
+        .screen.active { display: flex; } /* Cambiado a flex para un mejor control del layout */
+        .nequi-button {
+            transition: transform 0.1s;
+        }
+        .nequi-button:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body class="bg-gray-200 flex justify-center items-center h-screen">
+
+    <div class="w-full max-w-sm h-[800px] bg-white shadow-2xl rounded-[40px] p-4 flex flex-col relative overflow-hidden border-8 border-black">
+        <!-- Notch -->
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 bg-black h-6 w-32 rounded-b-xl z-20"></div>
+
+        <!-- Screen 1: Home de Nequi (Simulado) -->
+        <div id="screen-home" class="screen active flex-col">
+            <div class="flex justify-between items-center p-4 flex-shrink-0">
+                <!-- AVATAR ACTUALIZADO -->
+                <img src="https://avatars.githubusercontent.com/u/22404830?v=4" alt="Avatar de Usuario" class="w-10 h-10 rounded-full">
+                <div>
+                    <p class="text-xs text-gray-500">Disponible</p>
+                    <p class="font-bold text-2xl text-gray-800">$ 850.000</p>
+                </div>
+                <div class="w-8 h-8 bg-gray-100 rounded-full flex items-center justify-center">🔔</div>
+            </div>
+            <div class="p-4 flex-grow">
+                <!-- Banner de Descubrimiento -->
+                <div class="bg-purple-50 border border-purple-200 rounded-2xl p-4 text-center cursor-pointer nequi-button" onclick="goToScreen('screen-landing')">
+                    <div class="text-4xl mb-2">🛡️</div>
+                    <h2 class="font-bold text-purple-800">¿Tu portátil es tu oficina?</h2>
+                    <p class="text-sm text-purple-700">Protégelo ahora y trabaja sin miedo.</p>
+                </div>
+                 <div class="mt-4 bg-gray-100 rounded-2xl p-4 text-center">
+                    <p class="text-gray-500">...otro contenido de Nequi...</p>
+                </div>
+            </div>
+            <div class="p-4 text-center text-gray-400 text-xs flex-shrink-0">Simulación de Home Nequi</div>
+        </div>
+
+        <!-- Screen 2: Aterrizaje / Bienvenida -->
+        <div id="screen-landing" class="screen flex-col text-center p-6">
+            <div class="flex-grow">
+                <h1 class="text-3xl font-extrabold text-gray-800">Tranquilidad para tu carrera como freelancer</h1>
+                <p class="text-gray-600 mt-2 mb-8">Con Protección Nequi, un imprevisto no detiene tu negocio.</p>
+                <div class="space-y-6">
+                    <div class="bg-gray-100 p-4 rounded-xl flex items-center gap-4">
+                        <div class="text-3xl">🛠️</div>
+                        <p class="text-left font-semibold text-gray-700">Cubre daños y robo de tus equipos.</p>
+                    </div>
+                    <div class="bg-gray-100 p-4 rounded-xl flex items-center gap-4">
+                        <div class="text-3xl">💸</div>
+                        <p class="text-left font-semibold text-gray-700">Te paga un diario si tienes que parar.</p>
+                    </div>
+                    <div class="bg-gray-100 p-4 rounded-xl flex items-center gap-4">
+                        <div class="text-3xl">⚡️</div>
+                        <p class="text-left font-semibold text-gray-700">Actívalo en segundos, sin papeleos.</p>
+                    </div>
+                </div>
+            </div>
+            <button class="w-full bg-[#6a0dad] text-white font-bold py-4 rounded-xl nequi-button mt-6 flex-shrink-0" onclick="goToScreen('screen-select-device')">Comenzar</button>
+        </div>
+
+        <!-- Screen 3: Selección de Equipo -->
+        <div id="screen-select-device" class="screen flex-col text-center p-6">
+            <div class="flex-grow">
+                <h2 class="text-2xl font-bold text-gray-800 mb-8">¿Qué herramienta quieres proteger?</h2>
+                <div class="space-y-6">
+                    <div class="border-2 border-gray-200 hover:border-purple-500 rounded-2xl p-6 cursor-pointer nequi-button" onclick="selectDevice('Laptop')">
+                        <div class="text-6xl">💻</div>
+                        <p class="mt-4 font-bold text-xl text-gray-800">Mi Laptop</p>
+                    </div>
+                    <div class="border-2 border-gray-200 hover:border-purple-500 rounded-2xl p-6 cursor-pointer nequi-button" onclick="selectDevice('Celular')">
+                        <div class="text-6xl">📱</div>
+                        <p class="mt-4 font-bold text-xl text-gray-800">Mi Celular</p>
+                    </div>
+                </div>
+            </div>
+             <button class="w-full bg-gray-200 text-gray-700 font-bold py-4 rounded-xl nequi-button mt-6 flex-shrink-0" onclick="goToScreen('screen-landing')">Volver</button>
+        </div>
+
+        <!-- Screen 4: Selección de Plan -->
+        <div id="screen-plans" class="screen flex-col p-4">
+            <div class="flex-grow">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Elige tu plan de tranquilidad</h2>
+                <div class="space-y-4">
+                    <!-- Plan Esencial -->
+                    <div class="border-2 border-gray-200 rounded-2xl p-4 cursor-pointer nequi-button" onclick="selectPlan('Plan Esencial', '$12.900/mes')">
+                        <h3 class="font-bold text-lg text-gray-800">Plan Esencial</h3>
+                        <p class="font-bold text-xl my-2">$12.900/mes</p>
+                        <p class="text-sm text-gray-600">✅ Cubre reparación por daño y fallas</p>
+                    </div>
+                    <!-- Plan Pro -->
+                    <div class="border-2 border-purple-500 bg-purple-50 rounded-2xl p-4 cursor-pointer nequi-button relative" onclick="selectPlan('Plan Pro', '$19.900/mes')">
+                        <span class="absolute top-2 right-2 bg-yellow-300 text-yellow-900 text-xs font-bold px-2 py-0.5 rounded-full">MÁS ELEGIDO</span>
+                        <h3 class="font-bold text-lg text-purple-800">Plan Pro</h3>
+                        <p class="font-bold text-xl text-purple-900 my-2">$19.900/mes</p>
+                        <p class="text-sm text-purple-700">✅ Todo lo del Plan Esencial</p>
+                        <p class="text-sm text-purple-700">✅ Cubre robo del equipo</p>
+                        <p class="text-sm font-bold text-purple-700">✅ Bolsillo de Continuidad</p>
+                    </div>
+                </div>
+            </div>
+             <button class="w-full bg-gray-200 text-gray-700 font-bold py-4 rounded-xl nequi-button mt-4 flex-shrink-0" onclick="goToScreen('screen-select-device')">Volver</button>
+        </div>
+
+        <!-- Screen 5: Confirmación y Pago -->
+        <div id="screen-confirm" class="screen flex-col p-6">
+            <div class="flex-grow">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Casi listo, Andrea</h2>
+                <div class="bg-gray-100 rounded-2xl p-6 space-y-4">
+                    <div class="flex justify-between">
+                        <span class="text-gray-500">Proteges:</span>
+                        <span id="confirm-device" class="font-semibold text-gray-800"></span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-500">Plan:</span>
+                        <span id="confirm-plan" class="font-semibold text-gray-800"></span>
+                    </div>
+                     <div class="border-t border-gray-200 my-4"></div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-500">Costo mensual:</span>
+                        <span id="confirm-price" class="font-bold text-xl text-gray-900"></span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-gray-500">Se descuenta de:</span>
+                        <span class="font-semibold text-gray-800">Tu saldo Nequi</span>
+                    </div>
+                </div>
+            </div>
+            <p class="text-xs text-gray-500 text-center my-4 flex-shrink-0">Puedes cancelar en cualquier momento desde la app. Aplican TyC.</p>
+            <button class="w-full bg-[#6a0dad] text-white font-bold py-4 rounded-xl nequi-button flex-shrink-0" onclick="goToScreen('screen-success')">Proteger mi equipo ahora</button>
+        </div>
+
+        <!-- Screen 6: ¡Éxito! -->
+        <div id="screen-success" class="screen flex-col text-center p-6 justify-center items-center">
+            <div class="text-7xl mb-6">🎉</div>
+            <h1 class="text-3xl font-extrabold text-gray-800">¡Listo! Tu equipo ya está protegido</h1>
+            <p class="text-gray-600 mt-4 mb-8">Desde ahora, puedes ver tu **Carátula de Tranquilidad** en el home de Nequi. Trabaja con la confianza de que estamos para ti.</p>
+            <button class="w-full bg-gray-200 text-gray-700 font-bold py-4 rounded-xl nequi-button" onclick="goToScreen('screen-home')">Entendido</button>
+        </div>
+
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Store user selections globally
+            const userSelection = {
+                device: '',
+                plan: '',
+                price: ''
+            };
+
+            // Make functions globally accessible
+            window.goToScreen = function(screenId) {
+                // Hide all screens
+                document.querySelectorAll('.screen').forEach(screen => {
+                    screen.classList.remove('active');
+                });
+                
+                // Show the target screen
+                const targetScreen = document.getElementById(screenId);
+                if (targetScreen) {
+                    targetScreen.classList.add('active');
+                }
+            }
+
+            window.selectDevice = function(device) {
+                userSelection.device = device;
+                goToScreen('screen-plans');
+            }
+
+            window.selectPlan = function(plan, price) {
+                userSelection.plan = plan;
+                userSelection.price = price;
+                
+                // Update confirmation screen content
+                document.getElementById('confirm-device').textContent = userSelection.device;
+                document.getElementById('confirm-plan').textContent = userSelection.plan;
+                document.getElementById('confirm-price').textContent = userSelection.price;
+                
+                goToScreen('screen-confirm');
+            }
+        });
+    </script>
+
+</body>
+</html>
